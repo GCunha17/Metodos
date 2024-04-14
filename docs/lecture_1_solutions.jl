@@ -1,3 +1,5 @@
+using NumericalAnalysis: round_sum, round_mul, trunc_sum, trunc_mul, absolute_error, relative_error, approximated_value_interval_given_relative_error, ir_absolute_error, ir_relative_error
+
 #Q1: ver arquivo RoundArithmetics.jl
 
 #Q2: ver arquivo RoundOffErrors.jl
@@ -64,3 +66,29 @@ value = -50.0
 relative_error = 10e-4
 comando = approximated_value_interval_given_relative_error(-50.0,10e-4)
 resultado = (-50.05, -49.95)
+
+#Q6:
+#calculando o valor da expressão original:
+comando = (13/14 - 6/7)/(2/ℯ - 5.4)
+#obs: acima, utilizei de \euler + tab para obter ℯ
+resultado = -0.015314082103982359
+r := -0.015314082103982359
+#calculando o valor da expressão utilizando a aproximação com trunc com 10 dígitos:
+comando = trunc((trunc_sum(13/14,-6/7,digits=10))/(trunc_sum(2/ℯ,-5.4,digits=10)),digits=10)
+resultado = -0.015314082
+t := -0.015314082
+#calculando o valor da expressão utilizando a aproximação com round com 10 dígitos:
+comando = round((round_sum(13/14,-6/7,digits=10))/(round_sum(2/ℯ,-5.4,digits=10)),digits=10)
+resultado = -0.0153140821
+a := -0.0153140821
+#calculando erro absoluto e relativo de cada:
+#truncamento:
+comando = relative_error(r,t)
+resultado = 6.789983132868875e-9
+comando = absolute_error(r,t)
+resultado = 1.039823591814093e-10
+#arredondamento:
+comando = relative_error(r,a)
+resultado = 2.600455942412628e-10
+comando = absolute_error(r,a)
+resultado = 3.982359580989581e-12
