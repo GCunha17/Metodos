@@ -5,9 +5,11 @@ OUTPUT: Solução x_1, x_2, ... , x_n =: x do sistema Ax = b
 """
 
 function solve_system(matriz_A::Matrix{Float64}, matriz_b::Vector{Float64})
-    n = length(b)
+    n_digits = 8
 
-    dimension_failure(A,n) && return
+    n = length(matriz_b)
+
+    dimension_failure(matriz_A,n) && return
 
     A = [copy(matriz_A) copy(matriz_b)]
 
@@ -19,7 +21,7 @@ function solve_system(matriz_A::Matrix{Float64}, matriz_b::Vector{Float64})
         fudeu = false
 
         for k = i:n
-            if A[k,i] != 0
+            if round(A[k,i], digits=n_digits) != 0
                 p = k
                 break
             end
@@ -53,14 +55,30 @@ function solve_system(matriz_A::Matrix{Float64}, matriz_b::Vector{Float64})
     end
 
     #Step 7
-    if A[n,n] == 0
+    if round(A[n,n], digits=n_digits) == 0
         println("Sistema não admite única solução")
         return
     end
 
     #Step 8
-    x = Vector{Float64}{undef, n}
+    x = Vector{Float64}(undef, n)
     x[n] = A[n, n+1] / A[n, n]
+
+    #Step 9 substituição reversa
+    for i=n-1:-1:1
+
+        soma = 0
+
+        for j=i+1:n
+            soma += A[i,j]*x[j]
+        end
+
+        x[i] = (A[i, n+1] - soma ) / A[i, i]
+
+    end
+
+    #Step 10
+    return(x)
 
 end
 
