@@ -1,6 +1,7 @@
 function fixp(f::Function,p_0::Float64,T::Float64,N::Int64)
 
     #Step 1
+    h(x) = x + f(x)
     p = p_0
     p_i = p_0
 
@@ -8,7 +9,7 @@ function fixp(f::Function,p_0::Float64,T::Float64,N::Int64)
     for i=1:N
 
         #Step 3
-        p = f(p_i)
+        p = h(p_i)
 
         #Step 4
         if abs(p - p_i) < T
