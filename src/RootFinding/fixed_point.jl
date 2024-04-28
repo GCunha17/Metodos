@@ -26,3 +26,5 @@ function fixp(f::Function,p_0::Float64,T::Float64,N::Int64)
     return("Deu ruim")
 
 end
+
+#Obs: função apenas para itrar f n vezes em delta_squared_aitken.jl
