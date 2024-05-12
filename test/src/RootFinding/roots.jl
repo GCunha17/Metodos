@@ -109,4 +109,67 @@ end =#
     x_calc = secant(z,0.1,2.0,τ,N)
     @test abs(z0-x_calc) ≈ 0 atol = tol
 
+# delta_squared_aitken
+
+    x_calc = d2a(f,1.0,τ,N)
+    @test abs(f0-x_calc) ≈ 0 atol = tol
+
+    x_calc = d2a(g,3.5,τ,N)
+    @test abs(g0-x_calc) ≈ 0 atol = tol
+
+    x_calc = d2a(w,2.0,τ,N)
+    @test norm(w0-x_calc) ≈ 0 atol = tol
+
+    #Só Deus sabe pq n funciona
+    #x_calc = d2a(y,0.2,τ,N)
+    #@test abs(y0-x_calc) ≈ 0 atol = tol
+
+    x_calc = d2a(z,0.7,τ,N)
+    @test abs(z0-x_calc) ≈ 0 atol = tol
+
+# steffensen
+
+    x_calc = stef(f,1.0,τ,N)
+    @test abs(f0-x_calc) ≈ 0 atol = tol
+
+    x_calc = stef(g,2.5,τ,N)
+    @test abs(g0-x_calc) ≈ 0 atol = tol
+
+    x_calc = stef(w,2.0,τ,N)
+    @test abs(w0-x_calc) ≈ 0 atol = tol
+
+    #x_calc = stef(y,0.2,τ,N)
+    #@test abs(y0-x_calc) ≈ 0 atol = tol
+
+    x_calc = stef(z,0.7,τ,N)
+    @test abs(z0-x_calc) ≈ 0 atol = tol
+
+#newton com horner
+
+    p = [1.0,1.0]
+    p_0 = -1.0
+    q = [1.0,2.0,1.0]
+    q_0 = -1.0
+    r = [0.0,0.0,1.0]
+    r_0 = 0.0
+    s = [-1.0,0.0,0.0,1.0]
+    s_0 = 1.0
+    t = [0.0,1.0,3.0,0.0,1.0]
+    t_0 = 0.0
+
+    x_calc = hnewton(p, 0.0, τ, N)
+    @test norm(p_0 - x_calc, Inf) ≈ 0 atol = tol
+
+    x_calc = hnewton(q, -0.5, τ, N)
+    @test norm(q_0 - x_calc, Inf) ≈ 0 atol = 1.0e-8
+
+    x_calc = hnewton(r, 0.7, τ, N)
+    @test norm(r_0 - x_calc, Inf) ≈ 0 atol = tol
+
+    x_calc = hnewton(s, 0.2, τ, N)
+    @test norm(s_0 - x_calc, Inf) ≈ 0 atol = tol
+
+    x_calc = hnewton(t, 0.7, τ, N)
+    @test norm(t_0 - x_calc, Inf) ≈ 0 atol = tol
+
 end

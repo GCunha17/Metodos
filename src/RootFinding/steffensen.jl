@@ -1,23 +1,20 @@
-function stef(f::Function, x::Float64, n::Int64)
+function stef(f::Function, x::Float64, T::Float64, n::Int64)
 
-    g(x) = (f(x+f(x)))/f(x) - 1
-    
-    f_1 = f(x)
+x0 = x
+h(x) = f(x) + x
 
-    for i = 2:n
+    for i = 1:n
 
-        if f(x) == x
-            return(x)
+        x1 = h(x0)
+        x2 = h(x1)
+        x_i = x0 - ((x1 - x0)^2)/(x2-2*x1+x0)
 
+        if abs(x_i - x0) < T
+            return(x_i)
+        
         end
 
-        f_i = f_1 - (f(f_1))/(g(f_1))
-        f_1 = f_i
-
-        if i == n
-            return(f_1)
-
-        end
+        x0 = x_i
 
     end
 
